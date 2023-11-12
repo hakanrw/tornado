@@ -1,0 +1,25 @@
+name: Create App Image
+run-name: New push by @${{ github.actor }}
+on: [push]
+jobs:
+  CreateAppImage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Install appimagetool
+        run: |
+          wget -O appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-aarch64.AppImage
+          chmod +x appimagetool
+          mv appimagetool bin/
+      - run: echo "🖥️  The workflow is ready to create the AppImage"
+      - name: Create AppImage
+        run: |
+          export PATH="bin:$PATH"
+          make
+      - name: Upload AppImage artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Tornado-x86_64.AppImage
+          path: Tornado-x86_64.AppImage
