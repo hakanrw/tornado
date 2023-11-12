@@ -1,4 +1,4 @@
-install_dir = /opt/tornado
+install_dir = opt/tornado
 
 AppImage: AppDir
 	ARCH=x86_64 appimagetool AppDir
@@ -11,7 +11,7 @@ AppDir: clean
 
 	cp -r res/. AppDir/
 
-	ln -s opt/tornado/tornado.py AppDir/AppRun
+	ln -s $(install_dir)/tornado.py AppDir/AppRun
 
 clean:
 	rm -rf AppDir
