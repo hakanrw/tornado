@@ -7,16 +7,23 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install desktop-file-utils
+
       - name: Install appimagetool
         run: |
           wget -O appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
           mkdir -p bin
           mv appimagetool bin/
+
       - name: Create AppImage
         run: |
           export PATH="bin:$PATH"
           make
+
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v3
         with:
